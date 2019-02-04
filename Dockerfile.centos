@@ -1,0 +1,8 @@
+FROM golang:1.11.5-stretch AS builder
+COPY . ./src/github.com/andrey-ko/simple-rest/
+RUN go install ./src/github.com/andrey-ko/simple-rest/
+
+FROM centos:7
+COPY --from=builder /go/bin/ /app/
+WORKDIR "/app"
+ENTRYPOINT ["/app/simple-rest"]
