@@ -1,0 +1,8 @@
+FROM golang:1.11.5-windowsservercore-1803 AS builder
+COPY . ./src/local/simple-rest/
+RUN go install ./src/local/simple-rest/
+
+FROM mcr.microsoft.com/windows/nanoserver:1803
+COPY --from=builder C:/gopath/bin/ C:/app/
+WORKDIR "C:/app"
+ENTRYPOINT ["C:/app/simple-rest.exe"]
