@@ -1,6 +1,6 @@
 FROM golang:1.11.5-windowsservercore-1709 AS builder
-COPY . ./src/local/simple-rest/
-RUN go install ./src/local/simple-rest/
+COPY . ./src/github.com/andrey-ko/simple-rest/
+RUN go install ./src/github.com/andrey-ko/simple-rest/cmd/simple-rest
 
 FROM mcr.microsoft.com/windows/nanoserver:1709
 COPY --from=builder C:/gopath/bin/ C:/app/

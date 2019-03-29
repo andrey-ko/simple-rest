@@ -33,7 +33,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Printf("failed to write response: %s", err)
 	}
-	host, err := os.Hostname()
+	host, _ := os.Hostname()
 	_, err = fmt.Fprintf(w, "host name: %s\n", host)
 	if err != nil {
 		log.Printf("failed to write response: %s", err)
@@ -49,7 +49,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	log.Printf("pid: '%d'...", os.Getpid())
+	log.Printf("pid: '%d'\n", os.Getpid())
+	log.Println("environment variables: ---------------------")
+	for _, env := range os.Environ() {
+		log.Println(env)
+	}
+	log.Println("--------------------------------------------")
+
 	addr := flag.String("addr", ":8080", "listening address")
 	flag.Parse()
 
